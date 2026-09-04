@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Единая подпись АРКО</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Golos+Text:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #F5F5F5;
+    --surface: #FFFFFF;
+    --surface-muted: #FAFAFA;
+    --line: #DEDEDE;
+    --line-strong: #C7C7C7;
+    --text: #1B1B1B;
+    --text-soft: #6E6E6E;
+    --text-faint: #9C9C9C;
+    --accent: #E30613;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 20px rgba(0,0,0,0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414; --surface: #1D1D1D; --surface-muted: #202020;
+      --line: #333333; --line-strong: #3F3F3F;
+      --text: #EFEFEF; --text-soft: #A6A6A6; --text-faint: #767676;
+      --accent: #FF4B4B;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414; --surface: #1D1D1D; --surface-muted: #202020;
+    --line: #333333; --line-strong: #3F3F3F;
+    --text: #EFEFEF; --text-soft: #A6A6A6; --text-faint: #767676;
+    --accent: #FF4B4B;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 24px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Golos Text','Segoe UI',Arial,sans-serif; line-height: 1.5; }
+  .page { max-width: 1040px; margin: 0 auto; padding: 56px 32px 80px; }
+
+  .eyebrow { font-weight: 600; font-size: 12.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+  h1 { font-family: 'Montserrat',sans-serif; font-weight: 800; font-size: clamp(28px,4vw,38px); line-height: 1.08; letter-spacing: -0.01em; text-wrap: balance; margin: 0 0 12px; }
+  .dek { font-size: 15px; color: var(--text-soft); max-width: 62ch; margin: 0 0 40px; }
+
+  h2 { font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 18px; margin: 0 0 4px; }
+  .section-sub { font-size: 13px; color: var(--text-faint); margin: 0 0 20px; max-width: 68ch; }
+  section { margin-bottom: 52px; }
+
+  /* ---- Превью подписи ---- */
+  .mail-frame {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    max-width: 480px;
+    overflow: hidden;
+  }
+  .mail-frame__bar {
+    display: flex; gap: 6px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .mail-frame__bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); }
+  .mail-frame__body { padding: 20px 22px 24px; }
+  .fake-line { height: 8px; background: var(--line); border-radius: 3px; margin-bottom: 8px; }
+  .fake-line.w60 { width: 60%; } .fake-line.w80 { width: 80%; } .fake-line.w40 { width: 40%; margin-bottom: 22px; }
+
+  /* ---- Инструкции ---- */
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .step-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px 18px 16px; }
+  .step-card h3 { font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 13.5px; margin: 0 0 10px; }
+  .step-card ol { margin: 0; padding-left: 18px; font-size: 12.5px; color: var(--text-soft); line-height: 1.6; }
+  .step-card li + li { margin-top: 4px; }
+  .step-card strong { color: var(--text); }
+
+  .note {
+    background: var(--surface-muted); border: 1px dashed var(--line-strong); border-radius: 6px;
+    padding: 12px 16px; font-size: 12.5px; color: var(--text-soft); margin-top: 16px;
+  }
+  .note strong { color: var(--text); }
+
+  /* ---- Директория ---- */
+  .search-row { position: sticky; top: 0; background: var(--bg); padding: 10px 0 16px; z-index: 5; }
+  #search {
+    width: 100%; max-width: 340px; padding: 10px 14px; font-size: 13.5px;
+    font-family: 'Golos Text',sans-serif; color: var(--text);
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: 6px;
+  }
+  #search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .dept-title {
+    font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 12px;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint);
+    margin: 28px 0 12px;
+  }
+  .dept-title:first-of-type { margin-top: 4px; }
+
+  .people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .person-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .person-card .name { font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 13.5px; }
+  .person-card .role { font-size: 12px; color: var(--text-soft); margin-bottom: 8px; }
+  .person-card .row { font-size: 11.5px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+  .copy-btn {
+    margin-top: 10px; align-self: flex-start;
+    font-family: 'Golos Text',sans-serif; font-weight: 600; font-size: 11.5px;
+    letter-spacing: .02em; color: var(--text); background: transparent;
+    border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px;
+    cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .copy-btn.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .person-card.hidden { display: none; }
+
+  .foot { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--text-faint); }
+
+  @media (max-width: 560px) {
+    .page { padding: 36px 18px 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">АРКО · стандарт коммуникации</p>
+  <h1>Единая подпись письма</h1>
+  <p class="dek">Сейчас подпись у каждого своя. Ниже — единый вид по фирменному стилю и готовый блок для каждого сотрудника, логотип уже внутри: копируете и вставляете в настройках своей почты, ничего печатать и вставлять отдельно не нужно.</p>
+
+  <section>
+    <h2>Как это выглядит</h2>
+    <p class="section-sub">Логотип уже встроен в блок — «Скопировать» переносит его вместе с текстом одним действием.</p>
+    <div class="mail-frame">
+      <div class="mail-frame__bar"><span></span><span></span><span></span></div>
+      <div class="mail-frame__body">
+        <div class="fake-line w80"></div>
+        <div class="fake-line w60"></div>
+        <div class="fake-line w40"></div>
+        <div id="preview-sig"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Как подключить</h2>
+    <p class="section-sub">Один шаг с текстом — логотип уже внутри скопированного блока.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <h3>Gmail</h3>
+        <ol>
+          <li>Настройки (⚙) → <strong>Все настройки</strong></li>
+          <li>Вкладка «Общие» → блок <strong>«Подпись»</strong> → «Создать»</li>
+          <li>Вставьте скопированный блок (Ctrl+V)</li>
+          <li>Внизу страницы — «Сохранить изменения»</li>
+        </ol>
+      </div>
+      <div class="step-card">
+        <h3>Outlook (веб / Office 365)</h3>
+        <ol>
+          <li>Настройки → Почта → <strong>Составление и ответ</strong></li>
+          <li>Раздел «Подписи электронной почты»</li>
+          <li>Вставьте скопированный блок</li>
+          <li>«Сохранить»</li>
+        </ol>
+      </div>
+      <div class="step-card">
+        <h3>Outlook (программа на компьютере)</h3>
+        <ol>
+          <li>Файл → Параметры → <strong>Почта → Подписи</strong></li>
+          <li>«Создать» (или выберите текущую)</li>
+          <li>Вставьте блок в поле редактирования</li>
+          <li>ОК → ОК</li>
+        </ol>
+      </div>
+      <div class="step-card">
+        <h3>Другая почта</h3>
+        <ol>
+          <li>Ищите в настройках раздел «Подпись»</li>
+          <li>Вставьте блок — логотип встанет вместе с текстом</li>
+        </ol>
+      </div>
+    </div>
+    <p class="note"><strong>Если кнопка «Скопировать» не сработала</strong> — откройте свою карточку ниже, выделите блок подписи вручную и нажмите Ctrl+C. <strong>Если после вставки логотип не показался</strong> (иногда почта режет встроенные картинки) — во вложении к письму есть файл arko-logo-256.png, его можно добавить кнопкой «изображение» в редакторе подписи.</p>
+  </section>
+
+  <section>
+    <h2>Найдите свою подпись</h2>
+    <p class="section-sub">27 человек, по отделам — производственный отдел и back-office.</p>
+    <div class="search-row">
+      <input id="search" type="text" placeholder="Начните вводить фамилию…" autocomplete="off">
+    </div>
+    <div id="directory"></div>
+  </section>
+
+  <div class="foot">Источник данных — контакт-лист компании, актуализирован 04.09.2026. Изменения по себе — через руководителя проекта или бухгалтерию.</div>
+</div>
+
+<script>
+const DEPARTMENTS = [
+  { name: "Производственный отдел", people: [
+    { name: "Чаун Даниил", role: "Руководитель проекта", phone: "+7 (982) 771-65-97", email: "chaun@ar-ko.ru" },
+    { name: "Бадмаев Солбон", role: "Руководитель проекта", phone: "+7 (923) 230-76-13", email: "badmaev@ar-ko.ru" },
+    { name: "Стог Ростислав", role: "Руководитель проекта", phone: "+7 (977) 845-81-69", email: "stog@ar-ko.ru" },
+    { name: "Акопян Артур", role: "Руководитель проекта", phone: "+7 (925) 620-60-40", email: "akopyan@ar-ko.ru" },
+    { name: "Минтель Александр", role: "Руководитель проекта", phone: "+7 (966) 152-77-55", email: "mintel@ar-ko.ru" },
+    { name: "Кондратьев Михаил", role: "Заместитель руководителя проекта по инженерным системам", phone: "+7 (995) 769-97-13", email: "kondratev@ar-ko.ru" },
+    { name: "Ахундов Сергей", role: "Помощник руководителя проекта", phone: "+7 (961) 653-64-87", email: "akhundov@ar-ko.ru" },
+    { name: "Горельцев Максим", role: "Помощник руководителя проекта", phone: "+7 (967) 068-80-44", email: "goreltsev@ar-ko.ru" },
+    { name: "Филимонов Артём", role: "Помощник руководителя проекта", phone: "+7 (915) 636-01-59", email: "filimonov@ar-ko.ru" },
+    { name: "Илюхин Антон", role: "Помощник руководителя проекта", phone: "+7 (968) 902-27-91", email: "iluhin@ar-ko.ru" },
+    { name: "Муратов Александр", role: "Производитель работ", phone: "+7 (966) 056-73-37", email: "" },
+    { name: "Ворожищев Валерий", role: "Производитель работ", phone: "+7 (916) 058-68-94", email: "" },
+    { name: "Токтоназаров Меражиддин", role: "Производитель работ", phone: "+7 (966) 082-83-77", email: "" },
+    { name: "Янковская Анна", role: "Производитель работ", phone: "+7 (905) 333-22-94", email: "" },
+    { name: "Перелыгин Вадим", role: "Производитель работ", phone: "+7 (960) 644-22-78", email: "" }
+  ]},
+  { name: "Back-office", people: [
+    { name: "Васильев Владимир", role: "Руководитель сметно-договорного отдела", phone: "+7 (926) 949-83-71", email: "do@ar-ko.ru" },
+    { name: "Шипулина Людмила", role: "Специалист ПТО", phone: "+7 (915) 063-44-66", email: "shipulina@ar-ko.ru" },
+    { name: "Горбатюк Станислав", role: "Специалист ПТО", phone: "+7 (977) 355-41-40", email: "gorbatyuk@ar-ko.ru" },
+    { name: "Мамылова Инна", role: "Руководитель бюджетно-аналитического отдела", phone: "+7 (985) 403-33-82", email: "mamylova@ar-ko.ru" },
+    { name: "Ерошик Дмитрий", role: "Руководитель тендерного отдела", phone: "+7 (916) 008-56-33", email: "eroshik@ar-ko.ru" },
+    { name: "Гагарина Татьяна", role: "Специалист МТО", phone: "+7 (929) 534-38-18", email: "tatg888@mail.ru" },
+    { name: "Мяоц Дмитрий", role: "Специалист МТО", phone: "+7 (915) 460-13-24", email: "myaots@yandex.ru" },
+    { name: "Чепик Дмитрий", role: "Специалист МТО", phone: "+7 (978) 505-16-16", email: "chepik@ar-ko.ru" },
+    { name: "Шпаковский Сергей", role: "Главный бухгалтер", phone: "+7 (926) 716-01-14", email: "s.sergey@ar-ko.ru" },
+    { name: "Джумирко Наталья", role: "Бухгалтер", phone: "+7 (925) 304-32-77", email: "dzhumirko@ar-ko.ru" },
+    { name: "Зарьев Никита", role: "IT-служба", phone: "+7 (916) 446-86-35", email: "" },
+    { name: "Антонов Илья", role: "Руководитель складской службы", phone: "+7 (903) 513-18-59", email: "" }
+  ]}
+];
+
+const LOGO_SRC = "data:image/png;base64,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";
+
+function sigInnerHTML(p) {
+  const contacts = p.email
+    ? `<a href="tel:${p.phone.replace(/[^\d+]/g,'')}" style="color:#1B1B1B;text-decoration:none;">${p.phone}</a><br>`
+      + `<a href="mailto:${p.email}" style="color:#1B1B1B;text-decoration:none;">${p.email}</a>`
+    : `<a href="tel:${p.phone.replace(/[^\d+]/g,'')}" style="color:#1B1B1B;text-decoration:none;">${p.phone}</a>`;
+  return `<div style="font-family:'Golos Text','Segoe UI',Arial,sans-serif;color:#1B1B1B;font-size:12px;line-height:1.5;">`
+    + `<img src="${LOGO_SRC}" width="120" height="87" alt="АРКО" style="display:block;border:0;outline:0;margin:0 0 10px;">`
+    + `<div style="font-family:'Montserrat','Segoe UI',Arial,sans-serif;font-weight:700;font-size:14px;color:#1B1B1B;">${p.name}</div>`
+    + `<div style="color:#6E6E6E;margin-top:1px;">${p.role}</div>`
+    + `<div style="margin-top:8px;">${contacts}</div>`
+    + `<div style="margin-top:10px;border-top:2px solid #E30613;width:32px;font-size:1px;line-height:1px;">&nbsp;</div>`
+    + `<div style="margin-top:7px;color:#8A8A8A;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;">FIT-OUT &middot; СМР &middot; ПРОЕКТИРОВАНИЕ</div>`
+    + `<div style="color:#8A8A8A;font-size:10.5px;margin-top:2px;">ООО &laquo;АРКО&raquo; &middot; ar-ko.ru</div>`
+    + `</div>`;
+}
+
+function sigPlainText(p) {
+  const lines = [p.name, p.role, "", p.email ? `${p.phone}\n${p.email}` : p.phone,
+                 "", "FIT-OUT · СМР · ПРОЕКТИРОВАНИЕ", "ООО «АРКО» · ar-ko.ru"];
+  return lines.join("\n");
+}
+
+// превью — берём Илюхина Антона как живой пример
+document.getElementById('preview-sig').innerHTML = sigInnerHTML(
+  DEPARTMENTS[0].people.find(p => p.name === "Илюхин Антон")
+);
+
+const dir = document.getElementById('directory');
+DEPARTMENTS.forEach(dept => {
+  const h = document.createElement('div');
+  h.className = 'dept-title';
+  h.textContent = dept.name;
+  dir.appendChild(h);
+
+  const grid = document.createElement('div');
+  grid.className = 'people-grid';
+  dept.people.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'person-card';
+    card.dataset.name = p.name.toLowerCase();
+    card.innerHTML = `
+      <div class="name">${p.name}</div>
+      <div class="role">${p.role}</div>
+      <div class="row">${p.phone}</div>
+      ${p.email ? `<div class="row">${p.email}</div>` : ''}
+      <button class="copy-btn" type="button">Скопировать подпись</button>
+    `;
+    const btn = card.querySelector('.copy-btn');
+    btn.addEventListener('click', async () => {
+      const html = sigInnerHTML(p);
+      const text = sigPlainText(p);
+      try {
+        if (window.ClipboardItem) {
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'text/html': new Blob([html], { type: 'text/html' }),
+              'text/plain': new Blob([text], { type: 'text/plain' })
+            })
+          ]);
+        } else {
+          await navigator.clipboard.writeText(text);
+        }
+        btn.textContent = 'Скопировано ✓';
+        btn.classList.add('done');
+        setTimeout(() => { btn.textContent = 'Скопировать подпись'; btn.classList.remove('done'); }, 2200);
+      } catch (e) {
+        btn.textContent = 'Не вышло — выделите текст вручную';
+      }
+    });
+    grid.appendChild(card);
+  });
+  dir.appendChild(grid);
+});
+
+document.getElementById('search').addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.person-card').forEach(card => {
+    card.classList.toggle('hidden', q.length > 0 && !card.dataset.name.includes(q));
+  });
+  document.querySelectorAll('.dept-title').forEach(title => {
+    const grid = title.nextElementSibling;
+    const anyVisible = [...grid.children].some(c => !c.classList.contains('hidden'));
+    title.style.display = anyVisible ? '' : 'none';
+    grid.style.display = anyVisible ? '' : 'none';
+  });
+});
+</script>
+
+</body>
+</html>
