@@ -240,9 +240,6 @@ const LOGO_SRC = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAC6CAYAAABB
 
 function sigInnerHTML(p) {
   const phoneLink = `<a href="tel:${p.phone.replace(/[^\d+]/g,'')}" style="color:#1B1B1B;text-decoration:none;">${p.phone}</a>`;
-  const emailLink = p.email
-    ? `<br><a href="mailto:${p.email}" style="color:#1B1B1B;text-decoration:none;">${p.email}</a>`
-    : '';
   return `<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="font-family:'Golos Text','Segoe UI',Arial,sans-serif;color:#1B1B1B;font-size:13px;line-height:1.5;">`
     + `<tr>`
     + `<td valign="middle" style="vertical-align:middle;padding-right:14px;">`
@@ -251,16 +248,14 @@ function sigInnerHTML(p) {
     + `<td valign="middle" style="vertical-align:middle;border-left:2px solid #E30613;padding-left:14px;">`
     + `<div style="font-family:'Montserrat','Segoe UI',Arial,sans-serif;font-weight:700;font-size:15px;color:#1B1B1B;">${p.name}</div>`
     + `<div style="color:#6E6E6E;font-size:13px;margin-top:2px;">${p.role}</div>`
-    + `<div style="margin-top:6px;font-size:13px;">${phoneLink}${emailLink}</div>`
+    + `<div style="margin-top:6px;font-size:13px;">${phoneLink}</div>`
     + `</td>`
     + `</tr>`
-    + `</table>`
-    + `<div style="margin-top:8px;font-size:11.5px;color:#8A8A8A;font-family:'Golos Text','Segoe UI',Arial,sans-serif;">ООО &laquo;АРКО&raquo; &middot; ar-ko.ru</div>`;
+    + `</table>`;
 }
 
 function sigPlainText(p) {
-  const lines = [p.name, p.role, "", p.email ? `${p.phone}\n${p.email}` : p.phone,
-                 "", "ООО «АРКО» · ar-ko.ru"];
+  const lines = [p.name, p.role, "", p.phone];
   return lines.join("\n");
 }
 
